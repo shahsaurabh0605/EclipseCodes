@@ -1,0 +1,46 @@
+import java.util.Stack;
+public class BST {
+	Link root;
+	Link current;
+	Stack<Integer> st = new Stack<>();
+	public void insert(int data) {
+		Link node= new Link(data);
+		if(root==null){
+			root= node;
+			root.parent= null;
+			root.left= null;
+			root.right= null;
+		}
+		else{
+			current= root;
+			while(true){
+				if(node.data>= current.data){
+					if(current.right==null){
+						current.right= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.right;
+				}
+				else{
+					if(current.left==null){
+						current.left= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.left;
+				}
+			}
+		}
+	}
+	public void avlRestore() {
+		
+		
+	}
+}

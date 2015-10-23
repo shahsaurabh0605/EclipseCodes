@@ -1,0 +1,37 @@
+import java.util.*;
+public class Main {
+	public static void main(String args[]){
+		Scanner s= new Scanner(System.in);
+		int t= s.nextInt();
+		for(int p=0;p<t;p++){
+			int n= s.nextInt();
+			if(n%2==0){
+				if(n!=2){
+					System.out.println("NO");
+				}
+				else{
+					System.out.println("YES");
+				}
+			}
+			else{
+				String str= Integer.toBinaryString(n);
+				if(str.charAt(str.length()-2)==0){
+					if(isPrime(n)){
+						System.out.println("YES");
+					}
+					else System.out.println("NO");
+				}
+				else
+				System.out.println("YES");
+			}
+		}
+	}
+	public static boolean isPrime(int n){
+		for(int i=2;i<n-1;i++){
+			if(n%i==0){
+				return true;
+			}
+		}
+		return false;
+	}
+}

@@ -1,0 +1,128 @@
+import java.util.Stack;
+public class BST {
+	Link root;
+	Link current;
+	public void insert(int data) {
+		Link node= new Link(data);
+		if(root==null){
+			root= node;
+			root.parent= null;
+			root.left= null;
+			root.right= null;
+			current= root;
+		}
+		else{
+			current= root;
+			while(true){
+				if(node.data>= current.data){
+					if(current.right==null){
+						current.right= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.right;
+				}
+				else{
+					if(current.left==null){
+						current.left= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.left;
+				}
+			}
+		}
+		avlRestore(current);
+	}
+	public void avlRestore(Link node) {
+		node.balance= 0;
+		while(node!= null && node.balance==0){
+			System.out.print(node.data+" sa");
+			node.balance= height(node.right)- height(node.left);
+			node= node.parent;
+		}
+		if(node!= null){
+			if(node.balance== -2){
+				if(node.left.balance==1){
+					RotateLeft(node.left);
+					node.left.balance= height(node.left.right)- height(node.left.left);
+					node.left.left.balance= height(node.left.left.right)- height(node.left.left.left);
+				}
+				RotateRight(node);
+			}
+			else if(node.balance== 2){
+				if(node.right.balance==-1){
+					RotateRight(node.right);
+					node.right.balance= height(node.right.right)- height(node.right.left);
+					node.right.right.balance= height(node.right.right.right)- height(node.right.right.left);
+				}
+				RotateLeft(node);
+			}
+		}
+		preorderRecursive(root);
+	}
+	public void RotateLeft(Link u){
+		Link w= u.right;
+		if(w!= null){
+			w.parent= u.parent;
+			if(u.parent!= null){
+				if(u==u.parent.left){
+					u.parent.left= w;
+				}
+				else u.parent.right= w;
+			}
+			u.right= w.left;
+			if(w.left!= null){
+				u.right.parent=u;
+			}
+			u.parent= w;
+			w.left= u;
+			if(u==root){
+				root= w;
+				root.parent= null;
+			}
+		}
+	}
+	public void RotateRight(Link u){
+		Link w= u.left;
+		if(w!= null){
+			w.parent= u.parent;
+			if(u.parent!= null){
+				if(u==u.parent.left){
+					u.parent.left= w;
+				}
+				else u.parent.right= w;
+			}
+			u.left= w.right;
+			if(w.right!= null){
+				u.left.parent=u;
+			}
+			u.parent= w;
+			w.right= u;
+			if(u==root){
+				root= w;
+				root.parent= null;
+			}
+		}
+	}
+	public int height(Link node){
+		if(node!= null){
+			return 1+ Math.max(height(node.left), height(node.right));
+		}
+		return 0;
+	}
+	public void preorderRecursive(Link node) {
+		if(node!=null){
+			System.out.print(node.data+" ");
+			preorderRecursive(node.left);
+			preorderRecursive(node.right);
+		}	
+	}
+
+}

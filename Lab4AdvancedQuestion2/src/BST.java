@@ -1,0 +1,55 @@
+import java.util.*;
+public class BST {
+	Link root;
+	Link current;
+	public void insert(int data) {
+		Link node= new Link(data);
+		if(root==null){
+			root= node;
+			root.parent= null;
+			root.left= null;
+			root.right= null;
+		}
+		else{
+			current= root;
+			while(true){
+				if(node.data>= current.data){
+					if(current.right==null){
+						current.right= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.right;
+				}
+				else{
+					if(current.left==null){
+						current.left= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.left;
+				}
+			}
+		}
+	}
+	public void levelorder(Link node) {
+		Queue<Link> queue= new LinkedList<>();	
+		queue.add(node);
+		while(!queue.isEmpty()){
+			node= queue.remove();
+			System.out.print(node.data+" ");
+			if(node.left!= null){
+				queue.add(node.left);
+				
+			}
+			if(node.right!= null)
+				queue.add(node.right);
+		}
+	}
+}

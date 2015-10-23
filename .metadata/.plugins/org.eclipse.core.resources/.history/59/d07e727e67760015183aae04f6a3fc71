@@ -1,0 +1,17 @@
+import java.util.Scanner;
+public class Main {
+	public static void main(String args[]){
+		Scanner s= new Scanner(System.in);
+		BST obj= new BST();
+		int n= s.nextInt();
+		for(int i=0;i<n;i++){
+			obj.insert(s.nextInt());
+		}
+		obj.postorder(obj.head);
+		int key= s.nextInt();
+		Link find = obj.search(key);
+		System.out.println(find.data);
+		if(find== null) System.out.println("Key not present");
+		else System.out.println("found");
+	}
+}

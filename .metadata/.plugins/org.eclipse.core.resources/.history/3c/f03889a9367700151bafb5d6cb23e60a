@@ -1,0 +1,257 @@
+import java.util.*;
+public class BST {
+	Link root;
+	Link current;
+	Stack<Integer> st = new Stack<>();
+	public void insert(int data) {
+		Link node= new Link(data);
+		if(root==null){
+			root= node;
+			root.parent= null;
+			root.left= null;
+			root.right= null;
+		}
+		else{
+			current= root;
+			while(true){
+				if(node.data>= current.data){
+					if(current.right==null){
+						current.right= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.right;
+				}
+				else{
+					if(current.left==null){
+						current.left= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.left;
+				}
+			}
+		}
+	}
+	
+	public void inorderRecursive(Link node){
+		if(node!=null){
+			inorderRecursive(node.left);
+			System.out.print(node.data+" ");
+			inorderRecursive(node.right);
+		}
+	}
+
+	public void inorderStack(Link node) {
+		Stack<Link> stack1= new Stack<>();
+		stack1.push(node);
+		while(!stack1.isEmpty()){
+			if(node.left!= null){
+				stack1.push(node.left);
+				node= node.left;
+			}
+			else{
+				node= stack1.pop();
+				System.out.print(node.data+" ");
+				if(node.right!= null){
+					stack1.push(node.right);
+					node= node.right;
+				}
+			}
+		}
+	}
+	public void inorderIterative(Link node){
+		Link minimum = min(node);
+		System.out.print(minimum.data);
+		Link temp= minimum;
+		while(temp!= null){
+			//System.out.println("dad");
+			temp= successor(temp);
+			if(temp!= null)
+			System.out.print(temp.data+" ");
+		}
+	}
+	public void preorderRecursive(Link node) {
+		if(node!=null){
+			System.out.print(node.data+" ");
+			preorderRecursive(node.left);
+			preorderRecursive(node.right);
+		}
+		
+	}
+
+	public void preorderStack(Link node) {
+		Stack<Link> stack1= new Stack<Link>();
+		stack1.push(node);
+		while(!stack1.isEmpty()){
+			node= stack1.pop();
+			System.out.print(node.data+" ");
+			if(node.right!= null)
+			stack1.push(node.right);
+			if(node.left!= null)
+			stack1.push(node.left);
+		}
+		
+	}
+	public void preorderIterative(Link node){
+		// true up right
+		// false down left
+		boolean vertical= false;
+		boolean child= false;
+		while(node!= null){
+			if(vertical){
+				System.out.print(node.data+" ");
+				if(node.left!=null){
+					vertical= false;
+					child= false;
+					node= node.left;
+				}
+				else if(node.right!= null){
+					vertical= false;
+					child= true;
+					node= node.right;
+				}
+				else{
+					if(node==node.parent.left){
+						vertical= true;
+						child= false;
+						node= node.parent;
+					}
+					else {
+						vertical= true;
+						child= true;
+						node= node.parent;
+					}
+				}
+			}
+			else if(vertical && !child){
+				if(node.right!= null){
+					node= node.right;
+					vertical= false;
+					child= true;
+					
+				}
+			}
+			else{
+				if(node!=root && node==node.parent.left){
+					vertical= true;
+					child= false;
+					node= node.parent;
+				}
+				else {
+					vertical= true;
+					child= true;
+					node= node.parent;
+				}
+			}
+		}
+	}
+	public void postorderRecursive(Link node) {
+		if(node!=null){
+			postorderRecursive(node.left);
+			postorderRecursive(node.right);
+			System.out.print(node.data+" ");
+		}
+		
+	}
+
+	public void postorderStack(Link node) {
+		Stack<Link> stack1= new Stack<Link>();
+		if(node.right!= null){
+			stack1.push(node.right);
+		}
+		stack1.push(node);
+		node= node.left;
+		while(!stack1.isEmpty()){
+			while(node!= null){
+				if(node.right!= null)
+					stack1.push(node.right);
+				stack1.push(node);
+				node=  node.left;
+			}
+				node= stack1.pop();
+				if(node.right!= null && !stack1.isEmpty() && stack1.peek()==node.right){
+					stack1.pop();
+					stack1.push(node);
+					node= node.right;
+				}
+				else{
+					System.out.print(node.data+" ");
+					node= null;
+				}
+		}
+	}
+	public void postorderIterative(Link node){
+		
+	}
+	public void levelorder(Link node) {
+		Queue<Link> queue= new LinkedList<Link>();
+		queue.add(node);
+		while(!queue.isEmpty()){
+			node= queue.poll();
+			if(node.left!= null)
+				queue.add(node.left);
+			if(node.right!= null)
+				queue.add(node.right);
+			System.out.print(node.data+" ");
+		}
+	}
+
+	public void zigzag(Link node) {
+		Stack<Link> stack1= new Stack<Link>();
+		Stack<Link> stack2= new Stack<Link>();
+		Stack<Link> currentStack= stack1;
+		stack1.push(node);
+		while(!stack1.isEmpty() || !stack2.isEmpty()){
+			if(currentStack==stack1){
+				node= stack1.pop();
+				if(node.left!= null)
+					stack2.push(node.left);
+				if(node.right!= null)
+					stack2.push(node.right);
+				System.out.print(node.data+" ");
+			}
+			else{
+				node= stack2.pop();
+				if(node.right!= null)
+					stack1.push(node.right);
+				if(node.left!= null)
+					stack1.push(node.left);
+				System.out.print(node.data+" ");
+			}
+			if(currentStack.isEmpty()){
+				if(currentStack==stack1){
+					currentStack= stack2;
+				}
+				else{
+					currentStack= stack1;
+				}
+			}
+		}
+	}
+	public Link min(Link node){
+		while(node.left!=null){
+			node= node.left;
+		}
+		return node;
+		
+	}
+	public Link successor(Link node){
+		if(node.right!= null){
+			return min(node.right);
+		}
+		Link temp= node.parent;
+		while(temp!=null && node== temp.right){
+			node= temp;
+			temp= node.parent;
+		}
+			return temp;
+		
+	}
+}

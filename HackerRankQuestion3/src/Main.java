@@ -1,0 +1,40 @@
+import java.util.*;
+public class Main {
+	public static void main(String args[]){
+		Scanner s= new Scanner(System.in);
+		int a[]= new int[10000];
+		int b[]= new int[100000];
+		int temp[]=new int[100000];
+		int n= s.nextInt();
+		int k= s.nextInt();
+		for(int i=0;i<n;i++){
+			a[i]= s.nextInt();
+		}
+		for(int i=0;i<n;i++){
+			b[i]= s.nextInt();
+		}
+		for(int i=0;i<k;i++){
+			for(int j=0;j<n;j++){
+				temp[j]= a[j]*b[j];
+			}
+			int max= Integer.MIN_VALUE;
+			for(int j=0;j<n;j++){
+				if(temp[j]>max){
+					max= temp[j];
+				}
+			}
+			int x=0;
+			for(int j=0;j<n;j++){
+				if(temp[j]==max){
+					x=j;
+					break;
+				}
+			}
+			if(a[x]!=0)
+				a[x]--;			
+		}
+		for(int i=0;i<n;i++){
+			System.out.print(a[i]+" ");
+		}
+	}
+}

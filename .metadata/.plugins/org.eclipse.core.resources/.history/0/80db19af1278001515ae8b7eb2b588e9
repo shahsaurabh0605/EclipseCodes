@@ -1,0 +1,29 @@
+import java.util.*;
+public class Main {
+	public static void main(String args[]){
+		Scanner s= new Scanner(System.in);
+		ArrayList<String> arr= new ArrayList<String>();
+		int arr1[]= new int[10000];
+		int n= s.nextInt();
+		for(int i=0;i<n;i++){
+			arr.add(s.nextLine());
+		}
+		for(int i=0;i<n;i++){
+			arr1[i]= Collections.frequency(arr, arr.get(i));
+		}
+		int max= Integer.MIN_VALUE;
+		for(int i=0;i<n;i++){
+			if(arr1[i]>max){
+				max= arr1[i];
+			}
+		}
+		int x=0;
+		for(int i=0;i<n;i++){
+			if(arr1[i]==max){
+				x=i;
+				break;
+			}
+		}
+		System.out.println(arr.get(x));
+	}
+}

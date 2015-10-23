@@ -1,0 +1,68 @@
+public class BST{	
+	public Link head;
+	public Link current;
+	public void insert(int data){
+		Link temp= new Link(data);
+		if(head==null){
+			head= temp;
+			head.right= null;
+			head.left= null;
+			head.parent= null;
+			current= head;
+		}
+		else{
+			current= head;
+			while(true){
+				if(temp.data>= current.data){  
+					if(current.right!=null){
+						current= current.right;	
+					}
+					else{
+						current.right= temp;
+						temp.parent= current;
+						temp.right= null;
+						temp.left= null;
+						current= current.right;
+						break;
+					}
+				}
+				else if(temp.data< current.data){
+					if(current.left!=null){
+						current= current.left;
+					}
+					else{
+						current.left= temp;
+						temp.parent= current;
+						temp.right= null;
+						temp.left= null;
+						current= current.left;
+						break;
+					}
+				}
+			}
+		}
+	}
+	public void RotateLeft(Link x){
+		
+	}
+	public void RotateRight(Link x){
+		
+	}
+	public Link search(int key){
+		current= head;
+		while(key!=current.data){
+			if(key>current.data)
+				current= current.right;
+			else 
+				current= current.left;
+		}
+		return current;
+	}
+	public void inorder(Link curr){
+		if(curr!= null){
+			inorder(curr.left);
+			System.out.print(curr.data+" ");
+			inorder(curr.right);
+		}
+	}
+}

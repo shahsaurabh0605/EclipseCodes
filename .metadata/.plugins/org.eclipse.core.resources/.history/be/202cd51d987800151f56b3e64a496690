@@ -1,0 +1,97 @@
+public class BST {
+	Link root;
+	Link current;
+	public void insert(int data) {
+		Link node= new Link(data);
+		if(root==null){
+			root= node;
+			root.parent= null;
+			root.left= null;
+			root.right= null;
+		}
+		else{
+			current= root;
+			while(true){
+				if(node.data>= current.data){
+					if(current.right==null){
+						current.right= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.right;
+				}
+				else{
+					if(current.left==null){
+						current.left= node;
+						node.parent= current;
+						node.left= null;
+						node.right= null;
+						current= node;
+						break;
+					}
+					else current= current.left;
+				}
+			}
+		}
+	}
+	public Link search(Link node,int key) {
+		if(key==node.data || node==null){
+			return node;
+		}
+		if(key> node.data){
+			return search(node.right,key);
+		}
+		else return search(node.left,key);
+	}
+	public void postorder(Link node){
+		if(node!= null){
+			postorder(node.left);
+			postorder(node.right);
+			System.out.println(node.data);
+		}
+	}
+	int a,b;
+	public int height(Link node) {
+		if(node.left==null && node.right== null){
+			return 0; 
+		}
+		if(node.left!= null)
+			a= height(node.right);
+		if(node.right!= null)
+			b= height(node.left);
+		return 1+ Math.max(a, b);
+	}
+	
+	int count=0;
+	public int depth(Link node) {
+		while(node!= root){
+			node= node.parent;
+			count++;
+		}
+		return count;
+	}
+	
+	public int subtreeSize(Link node) {
+		a=0;b=0;
+		if(node.left== null && node.right==null){
+			return 1;
+		}
+		if(node.left!= null){
+			a= subtreeSize(node.left);
+		}
+		if(node.right!= null){
+			b= subtreeSize(node.right);
+		}
+		return (1+a+b);
+	}
+	public int rank(int key) {
+		
+		return 0;
+	}
+	public void queryQuestion(int begin, int end) {
+		
+	}
+}

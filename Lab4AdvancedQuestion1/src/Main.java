@@ -1,0 +1,40 @@
+import java.util.Scanner;
+public class Main {
+	public static void main(String args[]){
+		Scanner s= new Scanner(System.in);
+		BST obj= new BST();
+		int n= s.nextInt();
+		for(int i=0;i<n;i++){
+			obj.insert(s.nextInt());
+		}
+		int choice= s.nextInt();
+		switch(choice){
+		case 1:
+			int height= obj.height(obj.root);
+			System.out.println(height);
+			break;
+		case 2:
+			int key1= s.nextInt();
+			Link find1= obj.search(obj.root,key1);
+			int depth= obj.depth(obj.root);
+			System.out.println(depth);
+			break;
+		case 3:
+			int key= s.nextInt();
+			Link find= obj.search(obj.root,key);
+			int subtreeSize= obj.subtreeSize(find);
+			System.out.println(subtreeSize);
+			break;
+		case 4:
+			int element= s.nextInt();
+			Link find2= obj.search(obj.root,element);
+			int rank= obj.rank(find2);
+			System.out.println(rank);
+			break;
+		case 5:
+			int begin= s.nextInt();
+			int end= s.nextInt();
+			obj.queryQuestion(begin,end);
+		}
+	}
+}

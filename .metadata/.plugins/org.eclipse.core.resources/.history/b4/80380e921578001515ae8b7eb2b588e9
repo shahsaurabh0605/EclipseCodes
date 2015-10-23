@@ -1,0 +1,23 @@
+import java.util.*;
+public class Main {
+	public static void main(String args[]){
+		Scanner s= new Scanner(System.in);
+		int t= s.nextInt();
+		for(int p=0;p<t;p++){
+			int n= s.nextInt();
+			if(n%2==0){
+				if(n!=2){
+					System.out.println("NO");
+				}
+				else{
+					System.out.println("YES");
+				}
+			}
+			else{
+				String str= Integer.toBinaryString(n);
+				System.out.println(str.charAt(str.length()-1));
+				System.out.println("YES");
+			}
+		}
+	}
+}

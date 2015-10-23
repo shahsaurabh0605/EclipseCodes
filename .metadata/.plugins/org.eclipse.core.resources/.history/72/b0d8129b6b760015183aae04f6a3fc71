@@ -1,0 +1,125 @@
+public class BST{	
+	public Link head;
+	public Link current;
+	public void insert(int data){
+		Link temp= new Link(data);
+		if(head==null){
+			head= temp;
+			head.right= null;
+			head.left= null;
+			head.parent= null;
+			current= head;
+		}
+		else{
+			int count=0;
+			current= head;
+			while(true){
+				if(count%2==0){
+					if(temp.data> current.data){  
+						if(current.right!=null){
+							current= current.right;
+							count++;
+						}
+						else{
+							current.right= temp;
+							temp.parent= current;
+							temp.right= null;
+							temp.left= null;
+							current= current.right;
+							break;
+						}
+					}
+					else if(temp.data< current.data){
+						if(current.left!=null){
+							current= current.left;
+							count++;
+						}
+						else{
+							current.left= temp;
+							temp.parent= current;
+							temp.right= null;
+							temp.left= null;
+							current= current.left;
+							break;
+						}
+					}
+				}
+				else{
+					if(temp.data< current.data){  
+						if(current.right!=null){
+							current= current.right;
+							count++;
+						}
+						else{
+							current.right= temp;
+							temp.parent= current;
+							temp.right= null;
+							temp.left= null;
+							current= current.right;
+							break;
+						}
+					}
+					else if(temp.data> current.data){
+						if(current.left!=null){
+							current= current.left;
+							count++;
+						}
+						else{
+							current.left= temp;
+							temp.parent= current;
+							temp.right= null;
+							temp.left= null;
+							current= current.left;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+	public void postorder(Link curr){
+		if(curr!= null){
+			postorder(curr.left);
+			postorder(curr.right);
+			System.out.print(curr.data+" ");
+		}
+	}
+	public Link search(int key) {
+		int count=0;
+		current= head;
+		while(current!= null && current.data!= key){
+			if(count%2==0){
+				if(key>current.data){
+					current= current.right;
+				}
+				else current= current.left;
+			}
+			else{
+				if(key> current.data){
+					current= current.left;
+				}
+				else current= current.right;
+			}
+			count++;
+		}
+		return current;
+	}
+	public int maximum(Link curr) {
+		int count=0;
+		while(true){
+			if(count%2==0){
+				if(curr.right!= null){
+					curr= curr.right;
+				}
+				else return curr.data;
+			}
+			else{
+				if(curr.left!= null){
+					curr= curr.left;
+				}
+				else return curr.data;
+			}
+			count++;
+		}
+	}
+}
